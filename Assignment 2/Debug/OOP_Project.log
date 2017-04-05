@@ -1,0 +1,29 @@
+﻿Build started 05/04/2017 17:37:37.
+     1>Project "F:\Year 2\Object Oriented Programming\Assignments\Assignment 2\OOP_Project.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 5003_Task1c_Main.cpp CashPoint.cpp
+         CashPoint.cpp
+         Generating Code...
+         Compiling...
+         5003_Task1c_Main.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Year 2\Object Oriented Programming\Assignments\Assignment 2\Debug\OOP_Project.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\Year 2\Object Oriented Programming\Assignments\Assignment 2\Debug\OOP_Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"F:\Year 2\Object Oriented Programming\Assignments\Assignment 2\Debug\OOP_Project.lib" /MACHINE:X86 /SAFESEH Debug\5003_Task1c_Main.obj
+         Debug\BankAccount.obj
+         Debug\CashCard.obj
+         Debug\CashPoint.obj
+         Debug\ChildAccount.obj
+         Debug\CurrentAccount.obj
+         Debug\Date.obj
+         Debug\ISAAccount.obj
+         Debug\SavingsAccounts.obj
+         Debug\Time.obj
+         Debug\Transaction.obj
+         Debug\TransactionList.obj
+         Debug\UserInterface.obj
+         OOP_Project.vcxproj -> F:\Year 2\Object Oriented Programming\Assignments\Assignment 2\Debug\OOP_Project.exe
+     1>Done Building Project "F:\Year 2\Object Oriented Programming\Assignments\Assignment 2\OOP_Project.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:06.16
