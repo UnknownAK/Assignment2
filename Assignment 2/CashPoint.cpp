@@ -194,11 +194,17 @@ void CashPoint::m5_showAllDepositsTransactions() const{
 	bool noTransaction(p_theActiveAccount_->isEmptyTransactionList());
 	string str;
 	double total(0.0);
-	//if (!noTransaction)
-	//2: [not noTransaction] produceAllDepositTransactions(): string x double
-	//; //	p_theActiveAccount_->produceAllDepositTransactions( str, total);
-	//3: showAllDepositsOnScreen(noTransaction, str, total)
-	//theUI_.showAllDepositsOnScreen(noTransaction, str, total);
+	
+	if (!noTransaction)
+	{
+		p_theActiveAccount_->produceAllDepositTransactions(str, total);
+		theUI_.showAllDepositsOnScreen(noTransaction, str, total);
+	}
+
+	else
+	{
+		theUI_.showNoTransactionsOnScreen();
+	}
 }
 
 //--option 6
@@ -212,19 +218,19 @@ void CashPoint::m6_showMiniStatement() const
 
 	assert(p_theActiveAccount_ != nullptr);
 
-	while (amount < 1)
-	{
-		cout << "Enter number of recent transactions to receive: ";
-		cin >> amount;
-	}
+	amount = theUI_.receiveTransactions();
 
-	cout << "RECENT TRANSACTIONS REQUESTED AT " << Time::currentTime().toFormattedString() << " ON " << Date::currentDate().toFormattedString();
+	theUI_.displayMessages(2, "");
 
 	if (!isEmpty)
 	{
 		total = p_theActiveAccount_->produceMostRecentTransactions(amount, str);
 		mad = p_theActiveAccount_->prepareFormattedMiniAccountDetails();
 		theUI_.showMiniStatementOnScreen(isEmpty, total, mad, str);
+	}
+	else
+	{
+		theUI_.showNoTransactionsOnScreen();
 	}
 }
 
@@ -274,7 +280,11 @@ void CashPoint::m7a_showTransactionsForAmount() const
 	int n(0);
 	string str;
 
-	a = theUI_.readInAmount();
+	while (a <= 0)
+	{
+		a = theUI_.readInAmount();
+	}
+	
 	n = p_theActiveAccount_->produceTransactionsForAmount(a, str);
 
 	theUI_.showMatchingTransactionsOnScreen(n, str);
@@ -287,6 +297,7 @@ void CashPoint::m7b_showTransactionsForTitle() const
 	string str;
 
 	t = theUI_.readInText();
+
 	n = p_theActiveAccount_->produceTransactionsForTitle(t, str);
 
 	theUI_.showMatchingTransactionsOnScreen(n, str);
@@ -299,6 +310,7 @@ void CashPoint::m7c_showTransactionsForDate() const
 	string str;
 
 	d = theUI_.readInText();
+	
 	n = p_theActiveAccount_->produceTransactionsForDate(d, str);
 
 	theUI_.showMatchingTransactionsOnScreen(n, str);
@@ -367,7 +379,16 @@ void CashPoint::m10_transferCashToAnotherAccount()
 
 	cardDetails = p_theCashCard_->toFormattedString();
 	theUI_.showCardOnScreen(cardDetails);
-	account = theUI_.readInAccountToBeProcessed();
+	
+	while (account == p_theActiveAccount_->getAccountNumber() || account == "")
+	{
+		account = theUI_.readInAccountToBeProcessed();
+
+		if (account == p_theActiveAccount_->getAccountNumber())
+		{
+			theUI_.displayMessages(1, account);
+		}
+	}
 
 	filename = "data/account_" + account + ".txt";
 
@@ -386,10 +407,19 @@ void CashPoint::m10_transferCashToAnotherAccount()
 
 void CashPoint::attemptTransfer(BankAccount* transferAccount) const
 {
-	double transferAmount;
+	double transferAmount(0);
 	bool trOutOK, trInOK;
+	
+	while (transferAmount <= 0)
+	{
+		transferAmount = theUI_.readInTransferAmount();
 
-	transferAmount = theUI_.readInTransferAmount();
+		if (transferAmount <= 0)
+		{
+			theUI_.displayMessages(3, to_string(transferAmount));
+		}
+	}
+	
 	trOutOK = p_theActiveAccount_->canTransferOut(transferAmount);
 	trInOK = p_theActiveAccount_->canTransferIn(transferAmount);
 
@@ -409,8 +439,6 @@ void CashPoint::recordTransfer(double transferAmount, BankAccount* transferAccou
 	aAN = p_theActiveAccount_->getAccountNumber();
 	transferAccount->recordTransferIn(transferAmount, aAN);
 }
-
-
 
 //------private file functions
 
@@ -466,16 +494,16 @@ BankAccount* CashPoint::activateBankAccount(const string& filename) {
 			p_BA = new BankAccount;    //points to a BankAccount object
 			break;
 		case CURRENTACCOUNT_TYPE:	//NOT NEEDED WITH ABSTRACT CLASSES
-			p_BA = new CurrentAccount;    //points to a BankAccount object
+			p_BA = new CurrentAccount;    //points to a CurrentAccount object
 			break;
 		case SAVINGSACCOUNT_TYPE:	//NOT NEEDED WITH ABSTRACT CLASSES
-			p_BA = new SavingsAccount;    //points to a BankAccount object
-			break;
-		case CHILDACCOUNT_TYPE:	//NOT NEEDED WITH ABSTRACT CLASSES
-			p_BA = new ChildAccount;    //points to a BankAccount object
+			p_BA = new SavingsAccount;    //points to a SavingsAccount object
 			break;
 		case ISAACCOUNT_TYPE:	//NOT NEEDED WITH ABSTRACT CLASSES
-			p_BA = new ISAAccount;    //points to a BankAccount object
+			p_BA = new ISAAccount;    //points to a ISAAccount object
+			break;
+		case CHILDACCOUNT_TYPE:	//NOT NEEDED WITH ABSTRACT CLASSES
+			p_BA = new ChildAccount;    //points to a ChildAccount object
 			break;
 	}
 	assert(p_BA != nullptr);
@@ -494,15 +522,4 @@ BankAccount* CashPoint::releaseBankAccount(BankAccount* p_BA, string filename) {
 	return nullptr;
 }
 
-
-//not sure whether we need this function or not
-
-//CurrentAccount* CashPoint::releaseCurrentAccount(BankAccount* p_BA, string filename) {
-//	//store (possibly updated) data back in file
-//	assert(p_BA != nullptr);
-//	p_BA->storeBankAccountInFile(filename);
-//	//effectively destroy the bank account instance
-//	delete p_BA;
-//	return nullptr;
-//}
 
