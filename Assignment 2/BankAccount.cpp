@@ -5,7 +5,6 @@
 
 #include "BankAccount.h"
 #include "Constants.h"
-
 //---------------------------------------------------------------------------
 //BankAccount: class implementation
 //---------------------------------------------------------------------------
@@ -99,7 +98,7 @@ double BankAccount::produceMostRecentTransactions(int amount, string& str) const
 
 	double total(0.0);
 
-	trl = transactions_.getMostRecentTransactions(amount);
+	trl = transactions_.getMostRecentTransactions(amount);	
 	total = trl.getTotalTransactions();
 	str = trl.toFormattedString();
 
@@ -269,8 +268,8 @@ const string BankAccount::accountType(char n)
 		case BANKACCOUNT_TYPE:		type = "BANK"; break;
 		case CURRENTACCOUNT_TYPE:	type = "CURRENT"; break;
 		case SAVINGSACCOUNT_TYPE:	type = "SAVINGS"; break;
-		case CHILDACCOUNT_TYPE:		type = "CHILD"; break;
 		case ISAACCOUNT_TYPE:		type = "ISA"; break;
+		case CHILDACCOUNT_TYPE:		type = "CHILD"; break;
 //etc..
 		default:					type = "UNKNOWN";
 	}

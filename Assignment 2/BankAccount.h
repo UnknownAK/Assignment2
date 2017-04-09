@@ -1,7 +1,7 @@
 //Pascale Vacher - March 17
 //OOP Assignment Task 1c - Semester 2
-//Group Number:
-//Team: (indicate member names, students numbers and courses)
+//Group Number: 23
+//Team: Cameron Huntington, Brian Leow, Karl Derbyshire, Will Jones
 
 #ifndef BankAccountH
 #define BankAccountH
@@ -33,12 +33,12 @@ public:
     bool	isEmptyTransactionList() const;
 
 	//other operations
-	const string prepareFormattedStatement() const;
+	virtual const string prepareFormattedStatement() const;		//virtual so it can be used by other account types
 
-    void recordDeposit(double amount);
+    virtual void recordDeposit(double amount);		//allows for maximum yearly deposit
 
 	double maxWithdrawalAllowed() const;
-	bool canWithdraw(double amount) const;
+	virtual bool canWithdraw(double amount) const;
     void recordWithdrawal(double amount);
 	void produceAllDepositTransactions(string& str, double& total) const;
 
@@ -68,8 +68,8 @@ public:
 	void recordDeletionOfTransactionUpToDate(Date d);
 
 	//option 10
-	bool canTransferOut(double transferAmount) const;
-	bool canTransferIn(double transferAmount) const;
+	virtual bool canTransferOut(double transferAmount) const;
+	virtual bool canTransferIn(double transferAmount) const;
 	void recordTransferOut(double transferAmount, string tAN);
 	void recordTransferIn(double transferAmount, string aAN);
 
