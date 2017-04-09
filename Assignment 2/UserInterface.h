@@ -1,7 +1,7 @@
 //Pascale Vacher - March 17
 //OOP Assignment Task 1c - Semester 2
-//Group Number:
-//Team: (indicate member names, students numbers and courses)
+//Group Number: 23
+//Team: Cameron Huntington, Brian Leow, Karl Derbyshire, Will Jones
 
 
 #ifndef UserInterfaceH 
@@ -50,6 +50,7 @@ public:
 
 	//option 6
 	void showMiniStatementOnScreen(bool isEmpty, double total, const string& mad, const string& str) const;
+	int receiveTransactions() const;
 
 	//option 7
 	void showNoTransactionsOnScreen() const;
@@ -72,6 +73,9 @@ public:
 	//option 10
 	double readInTransferAmount() const;
 	void showTransferOnScreen(bool trOutOK, bool trInOK, double transferAmount) const;
+
+	void displayMessages(int number, string text) const;
+
 private:
     //support functions
 	void	showCardIdentificationMenu() const;

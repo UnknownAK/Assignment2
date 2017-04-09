@@ -55,7 +55,7 @@ void UserInterface::showAccountProcessingMenu() const {
 
 const string UserInterface::readInCardToBeProcessed() const {
 	string cardNumber;
-	cout << "\n SELECT THE CARD ...(01 for bank account, 02 for current account)\n";
+	cout << "\n SELECT THE CARD ...\n";
 	cout << "   CARD NUMBER:  ";         //ask for card number
 	cin >> cardNumber;
 	cout << "\n=========================================";
@@ -190,17 +190,30 @@ void UserInterface::showMiniStatementOnScreen(bool isEmpty, double total, const 
 	}
 }
 
+int UserInterface::receiveTransactions() const
+{
+	int amount(0);
+
+	while (amount < 1)
+	{
+		cout << "Enter number of recent transactions to receive: ";
+		cin >> amount;
+	}
+
+	return amount;
+}
+
 //option 7
 void UserInterface::showMatchingTransactionsOnScreen(int n, const string& str) const
 {
 	if (n < 1)
 	{
-		cout << "\nNO SEARCH RESULTS FOUND...";
+		cout << "\nNO MATCHING TRANSACTIONS FOUND...";
 	}
 
 	else
 	{
-		cout << "\nFound " << n << " results";
+		cout << "\nFOUND " << n << " MATCHING TRANSACTIONS";
 		cout << "\n" << str;
 	}
 }
@@ -208,11 +221,14 @@ void UserInterface::showMatchingTransactionsOnScreen(int n, const string& str) c
 //option 8
 void UserInterface::showTransactionsUpToDateOnScreen(bool isEmpty, Date d, int n, string str) const
 {
-	if (!isEmpty)
+	if (n > 0)
 	{
 		cout << "\nSHOWING " << n << " TRANSACTIONS UP TO " << d.toFormattedString();
 		cout << "\n" << str;
 	}
+
+	else
+		cout << "NO TRANSACTIONS IN BANK ACCOUNT UP TO DATE " << d.toFormattedString();
 }
 
 
@@ -229,10 +245,13 @@ double UserInterface::readInAmount() const
 //7b
 string UserInterface::readInText() const
 {
-	string t;
+	string t = "";
 
-	cout << "Enter text: ";
-	cin >> t;
+	while (t.empty())
+	{
+		cout << "Enter value: ";
+		cin >> t;
+	}
 
 	return t;
 }
@@ -242,7 +261,7 @@ Date UserInterface::readInValidDate(Date cd) const
 {
 	Date date;
 
-	while (date < cd)
+	while ((date < cd) || (date > Date::currentDate()))
 	{
 		cout << "Enter date: ";
 		cin >> date;
@@ -261,7 +280,7 @@ void UserInterface::showDeletionOfTransactionsUpToDateOnScreen(int n, Date d, bo
 bool UserInterface::readInConfirmDeletion() const
 {
 	char choice;
-	cout << "ARE YOU SURE YOU WISH TO CLEAR TRANSACTIONS? (y/n): ";
+	cout << "\nARE YOU SURE YOU WISH TO CLEAR TRANSACTIONS? (y/n): ";
 	cin >> choice;
 
 	if (choice == 'y')
@@ -271,6 +290,7 @@ bool UserInterface::readInConfirmDeletion() const
 
 	else
 	{
+		cout << "\nOPERATION CANCELLED...";
 		return false;
 	}
 }
@@ -357,12 +377,16 @@ void UserInterface::showErrorInvalidCommand() const {
 	cout << "\nINVALID COMMAND CHOICE, TRY AGAIN";
 }
 double UserInterface::readInPositiveAmount() const {
-	double amount;
-	cin >> amount;
-	while (amount <= 0.0)
+	double amount(0);
+	
+	while (amount <= 0)
 	{
-		cout << "\nAMOUNT SHOULD BE A POSITIVE AMOUNT, TRY AGAIN: ";
 		cin >> amount;
+
+		if (amount <= 0)
+		{
+			cout << "\nAMOUNT SHOULD BE A POSITIVE AMOUNT, TRY AGAIN: ";
+		}
 	}
 	return amount;
 }
@@ -417,9 +441,29 @@ void UserInterface::showFundsAvailableOnScreen(bool empty, string mad, double m)
 		cout << fixed << setprecision(2) << setfill(' ');
 		cout << "\n\nTotal Available Funds: \234" << setw(0) << m;
 	}
-	//if no cards on account, display message "NO ACCOUNT ACCESSIBLE WITH THIS CARD!"
-		
+	//if no cards on account, display message "NO ACCOUNT ACCESSIBLE WITH THIS CARD!"		
 }
 
+void UserInterface::displayMessages(int number, string text) const
+{
+	//simple function to display messages in other files rather than using cout
+
+	switch (number)
+	{
+	case 1:	
+		cout << "\nTHE ACCOUNT (NUMBER:" << text << ") IS ALREADY OPEN";
+		break;
+	case 2:
+		cout << "\nRECENT TRANSACTIONS REQUESTED AT " << Time::currentTime().toFormattedString() << " ON " << Date::currentDate().toFormattedString() << endl;
+		break;
+	case 3:
+		cout << "\nAMOUNT SHOULD BE A POSITIVE NUMBER!";
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	}
+}
 
 
