@@ -1,7 +1,7 @@
 //Pascale Vacher - March 17
 //OOP Assignment Task 1c - Semester 2
-//Group Number:
-//Team: (indicate member names, students numbers and courses)
+//Group Number: 23
+//Team: Cameron Huntington, Brian Leow, Karl Derbyshire, Will Jones
 
 #ifndef ConstantsH
 #define ConstantsH
@@ -30,8 +30,9 @@ const int UNKNOWN_ACCOUNT_TYPE(3);
 const char BANKACCOUNT_TYPE('0');
 const char CURRENTACCOUNT_TYPE('1');
 const char SAVINGSACCOUNT_TYPE('2');
-const char ISAACCOUNT_TYPE('3');
-const char CHILDACCOUNT_TYPE('4');
+const char CHILDACCOUNT_TYPE('3');
+const char ISAACCOUNT_TYPE('4');
+
 //ressource path
 const string FILEPATH("data\\");
 

@@ -22,26 +22,6 @@ const Transaction TransactionList::newestTransaction() const {
     return (listOfTransactions_.first());
 }
 
-//option 6
-TransactionList TransactionList::getMostRecentTransactions(int userAmount) const
-{
-	TransactionList requestedTransactions;
-	TransactionList tempList(*this);
-
-	if (userAmount > tempList.size())
-	{
-		userAmount = tempList.size();
-	}
-
-	for (int i = 0; i < userAmount; i++)
-	{
-		requestedTransactions.addNewTransaction(tempList.newestTransaction());
-		tempList.deleteFirstTransaction();
-	}
-
-	return requestedTransactions;
-}
-
 const TransactionList TransactionList::olderTransactions() const {
 	TransactionList trlist(*this);
     trlist.deleteFirstTransaction();
@@ -117,6 +97,25 @@ TransactionList TransactionList::getAllDepositTransactions() const {
 	return trlDeposits;
 }
 
+//option 6
+TransactionList TransactionList::getMostRecentTransactions(int userAmount) const
+{
+	TransactionList requestedTransactions;
+	TransactionList tempList(*this);
+	
+	if (userAmount > tempList.size())
+	{
+		userAmount = tempList.size();
+	}
+
+	for (int i = 0; i < userAmount; i++)
+	{
+		requestedTransactions.addNewTransaction(tempList.newestTransaction());
+		tempList.deleteFirstTransaction();
+	}
+
+	return requestedTransactions;
+}
 
 //option 7a
 TransactionList TransactionList::getTransactionsForAmount(double a) const
@@ -182,14 +181,33 @@ TransactionList TransactionList::getTransactionsUpToDate(Date d) const
 	return trlDates;
 }
 
+
+//TransactionList TransactionList::getTransactionsUpToDate(Date d, TransactionList trlList) const
+//{
+//	TransactionList tempTrList;
+//
+//	if (trlList.size() == 0)
+//	{
+//		return tempTrList;
+//	}
+//	else if (trlList.newestTransaction().getDate() < d)
+//	{		
+//		return tempTrList;
+//	}
+//
+//	//make this recursive 
+//	
+//}
+
+
 //option 8 
 void TransactionList::deleteTransactionsUpToDate(const Date& d)
 {
 	//partially works, doesnt clear if the date provided is in between existing transactions
 
-	int x = size();
+	int s = size();
 
-	for (int i(0); i < x; i++)
+	for (int i(0); i < s; i++)
 	{
 		if (newestTransaction().getDate() < d)
 		{
@@ -197,6 +215,7 @@ void TransactionList::deleteTransactionsUpToDate(const Date& d)
 		}
 	}	
 }
+
 
 //---------------------------------------------------------------------------
 //non-member operator functions

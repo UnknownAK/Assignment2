@@ -1,7 +1,7 @@
 //Pascale Vacher - March 17
 //OOP Assignment Task 1c - Semester 2
-//Group Number:
-//Team: (indicate member names, students numbers and courses)
+//Group Number: 23
+//Team: Cameron Huntington, Brian Leow, Karl Derbyshire, Will Jones
 
 #ifndef TransactionListH
 #define TransactionListH
